@@ -64,7 +64,7 @@
                         android:background="@drawable/bg_icono_menta"
                         android:contentDescription="@string/logo_healthcare_descripcion"
                         android:padding="11dp"
-                        android:src="@drawable/ic_logo_estetoscopio" />
+                        android:src="@drawable/ic_logo_estetoscopio_verde" />
 
                 </LinearLayout>
 
