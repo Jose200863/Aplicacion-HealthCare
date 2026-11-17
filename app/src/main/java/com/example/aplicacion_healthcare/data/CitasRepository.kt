@@ -6,9 +6,6 @@ import android.database.Cursor
 import com.example.aplicacion_healthcare.database.HealthCareDbHelper
 import com.example.aplicacion_healthcare.models.Cita
 
-// Centraliza la administración de las citas.
-// Las pantallas llaman a esta clase; nunca escriben SQL directamente.
-
 class CitasRepository(context: Context) {
 
     private val dbHelper = HealthCareDbHelper(context)
@@ -22,10 +19,6 @@ class CitasRepository(context: Context) {
             LEFT JOIN ${HealthCareDbHelper.TABLE_MEDICO} m ON c.${HealthCareDbHelper.COL_CITA_MEDICO_ID} = m.${HealthCareDbHelper.COL_MEDICO_ID}
         """.trimIndent()
     }
-
-    // --------------------------------------------------
-    // READ: Obtener las citas próximas (hoy en adelante)
-    // --------------------------------------------------
     fun obtenerProximas(): List<Cita> {
         val db = dbHelper.readableDatabase
         val sql = "$QUERY_BASE WHERE c.${HealthCareDbHelper.COL_CITA_FECHA} >= date('now', 'localtime') ORDER BY c.${HealthCareDbHelper.COL_CITA_FECHA} ASC, c.${HealthCareDbHelper.COL_CITA_HORA} ASC"
@@ -40,9 +33,6 @@ class CitasRepository(context: Context) {
         return lista
     }
 
-    // --------------------------------------------------
-    // READ: Obtener las citas anteriores (antes de hoy)
-    // --------------------------------------------------
     fun obtenerAnteriores(): List<Cita> {
         val db = dbHelper.readableDatabase
         val sql = "$QUERY_BASE WHERE c.${HealthCareDbHelper.COL_CITA_FECHA} < date('now', 'localtime') ORDER BY c.${HealthCareDbHelper.COL_CITA_FECHA} DESC, c.${HealthCareDbHelper.COL_CITA_HORA} DESC"
@@ -57,9 +47,6 @@ class CitasRepository(context: Context) {
         return lista
     }
 
-    // --------------------------------------------------
-    // READ: Obtener una cita por su identificador
-    // --------------------------------------------------
     fun obtenerPorId(id: Int): Cita? {
         val db = dbHelper.readableDatabase
         val sql = "$QUERY_BASE WHERE c.${HealthCareDbHelper.COL_CITA_ID} = ?"
@@ -73,17 +60,10 @@ class CitasRepository(context: Context) {
         return null
     }
 
-    // --------------------------------------------------
-    // READ: Obtener la cita más cercana desde hoy
-    // (se usa en la tarjeta "Tu próxima cita" de Inicio)
-    // --------------------------------------------------
     fun obtenerProxima(): Cita? {
         return obtenerProximas().firstOrNull()
     }
 
-    // --------------------------------------------------
-    // CREATE: Agregar una cita
-    // --------------------------------------------------
     fun insertar(cita: Cita): Long {
         val db = dbHelper.writableDatabase
 
@@ -103,9 +83,6 @@ class CitasRepository(context: Context) {
         )
     }
 
-    // --------------------------------------------------
-    // UPDATE: Actualizar una cita
-    // --------------------------------------------------
     fun actualizar(cita: Cita): Int {
         val db = dbHelper.writableDatabase
 
@@ -126,9 +103,6 @@ class CitasRepository(context: Context) {
         )
     }
 
-    // --------------------------------------------------
-    // DELETE: Eliminar una cita
-    // --------------------------------------------------
     fun eliminar(id: Int): Int {
         val db = dbHelper.writableDatabase
 
@@ -139,9 +113,6 @@ class CitasRepository(context: Context) {
         )
     }
 
-    // --------------------------------------------------
-    // Convierte la fila actual del cursor en una Cita.
-    // --------------------------------------------------
     private fun cursorACita(it: Cursor): Cita {
         val getColString = { colName: String ->
             val idx = it.getColumnIndex(colName)

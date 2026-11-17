@@ -64,7 +64,6 @@ class DetalleMedicoActivity : AppCompatActivity() {
         btnAgendar = findViewById(R.id.btnAgendar)
     }
 
-    // Muestra los datos del médico en pantalla.
     private fun mostrarMedico(medico: Medico) {
         tvNombre.text = medico.nombre
         tvEspecialidad.text = medico.especialidad
@@ -82,7 +81,6 @@ class DetalleMedicoActivity : AppCompatActivity() {
             String.format("%,.0f", medico.precio)
         )
 
-        // La foto se busca en drawable por su nombre (ej. "doc_elena").
         val idFoto = resources.getIdentifier(medico.foto, "drawable", packageName)
         if (idFoto != 0) {
             ivFoto.setImageResource(idFoto)
