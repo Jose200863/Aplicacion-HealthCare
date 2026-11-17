@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aplicacion_healthcare.data.MedicosRepository
 import com.example.aplicacion_healthcare.models.Medico
 
 class DetalleMedicoActivity : AppCompatActivity() {

@@ -11,37 +11,32 @@ import com.example.aplicacion_healthcare.models.Cita
 
 class CitasRepository(context: Context) {
 
-    // Instancia que permite acceder a la base de datos.
     private val dbHelper = HealthCareDbHelper(context)
+
+    companion object {
+        private val QUERY_BASE = """
+            SELECT c.*, 
+                   m.${HealthCareDbHelper.COL_MEDICO_NOMBRE} AS medico_nombre, 
+                   m.${HealthCareDbHelper.COL_MEDICO_ESPECIALIDAD} AS medico_especialidad
+            FROM ${HealthCareDbHelper.TABLE_CITA} c
+            LEFT JOIN ${HealthCareDbHelper.TABLE_MEDICO} m ON c.${HealthCareDbHelper.COL_CITA_MEDICO_ID} = m.${HealthCareDbHelper.COL_MEDICO_ID}
+        """.trimIndent()
+    }
 
     // --------------------------------------------------
     // READ: Obtener las citas próximas (hoy en adelante)
     // --------------------------------------------------
     fun obtenerProximas(): List<Cita> {
-
         val db = dbHelper.readableDatabase
-
-        val cursor = db.query(
-            HealthCareDbHelper.TABLE_CITA,
-            null,
-            "${HealthCareDbHelper.COL_CITA_FECHA} >= date('now', 'localtime')",
-            null,
-            null,
-            null,
-            "${HealthCareDbHelper.COL_CITA_FECHA} ASC, " +
-                    "${HealthCareDbHelper.COL_CITA_HORA} ASC"
-        )
+        val sql = "$QUERY_BASE WHERE c.${HealthCareDbHelper.COL_CITA_FECHA} >= date('now', 'localtime') ORDER BY c.${HealthCareDbHelper.COL_CITA_FECHA} ASC, c.${HealthCareDbHelper.COL_CITA_HORA} ASC"
+        val cursor = db.rawQuery(sql, null)
 
         val lista = mutableListOf<Cita>()
-
-        // Recorremos los resultados obtenidos desde SQLite.
         cursor.use {
-
             while (it.moveToNext()) {
                 lista.add(cursorACita(it))
             }
         }
-
         return lista
     }
 
@@ -49,30 +44,16 @@ class CitasRepository(context: Context) {
     // READ: Obtener las citas anteriores (antes de hoy)
     // --------------------------------------------------
     fun obtenerAnteriores(): List<Cita> {
-
         val db = dbHelper.readableDatabase
-
-        val cursor = db.query(
-            HealthCareDbHelper.TABLE_CITA,
-            null,
-            "${HealthCareDbHelper.COL_CITA_FECHA} < date('now', 'localtime')",
-            null,
-            null,
-            null,
-            "${HealthCareDbHelper.COL_CITA_FECHA} DESC, " +
-                    "${HealthCareDbHelper.COL_CITA_HORA} DESC"
-        )
+        val sql = "$QUERY_BASE WHERE c.${HealthCareDbHelper.COL_CITA_FECHA} < date('now', 'localtime') ORDER BY c.${HealthCareDbHelper.COL_CITA_FECHA} DESC, c.${HealthCareDbHelper.COL_CITA_HORA} DESC"
+        val cursor = db.rawQuery(sql, null)
 
         val lista = mutableListOf<Cita>()
-
-        // Recorremos los resultados obtenidos desde SQLite.
         cursor.use {
-
             while (it.moveToNext()) {
                 lista.add(cursorACita(it))
             }
         }
-
         return lista
     }
 
@@ -80,26 +61,15 @@ class CitasRepository(context: Context) {
     // READ: Obtener una cita por su identificador
     // --------------------------------------------------
     fun obtenerPorId(id: Int): Cita? {
-
         val db = dbHelper.readableDatabase
-
-        val cursor = db.query(
-            HealthCareDbHelper.TABLE_CITA,
-            null,
-            "${HealthCareDbHelper.COL_CITA_ID} = ?",
-            arrayOf(id.toString()),
-            null,
-            null,
-            null
-        )
+        val sql = "$QUERY_BASE WHERE c.${HealthCareDbHelper.COL_CITA_ID} = ?"
+        val cursor = db.rawQuery(sql, arrayOf(id.toString()))
 
         cursor.use {
-
             if (it.moveToFirst()) {
                 return cursorACita(it)
             }
         }
-
         return null
     }
 
@@ -108,7 +78,6 @@ class CitasRepository(context: Context) {
     // (se usa en la tarjeta "Tu próxima cita" de Inicio)
     // --------------------------------------------------
     fun obtenerProxima(): Cita? {
-
         return obtenerProximas().firstOrNull()
     }
 
@@ -116,112 +85,86 @@ class CitasRepository(context: Context) {
     // CREATE: Agregar una cita
     // --------------------------------------------------
     fun insertar(cita: Cita): Long {
-
         val db = dbHelper.writableDatabase
 
         val values = ContentValues().apply {
-
             put(HealthCareDbHelper.COL_CITA_MEDICO_ID, cita.medicoId)
             put(HealthCareDbHelper.COL_CITA_FECHA, cita.fecha)
             put(HealthCareDbHelper.COL_CITA_HORA, cita.hora)
             put(HealthCareDbHelper.COL_CITA_MOTIVO, cita.motivo)
             put(HealthCareDbHelper.COL_CITA_MODALIDAD, cita.modalidad)
+            put(HealthCareDbHelper.COL_CITA_NOTAS, cita.notas)
         }
 
-        // insert() devuelve el ID generado o -1 si falla.
-        val resultado = db.insert(
+        return db.insert(
             HealthCareDbHelper.TABLE_CITA,
             null,
             values
         )
-
-        return resultado
     }
 
     // --------------------------------------------------
     // UPDATE: Actualizar una cita
     // --------------------------------------------------
     fun actualizar(cita: Cita): Int {
-
         val db = dbHelper.writableDatabase
 
         val values = ContentValues().apply {
-
             put(HealthCareDbHelper.COL_CITA_MEDICO_ID, cita.medicoId)
             put(HealthCareDbHelper.COL_CITA_FECHA, cita.fecha)
             put(HealthCareDbHelper.COL_CITA_HORA, cita.hora)
             put(HealthCareDbHelper.COL_CITA_MOTIVO, cita.motivo)
             put(HealthCareDbHelper.COL_CITA_MODALIDAD, cita.modalidad)
+            put(HealthCareDbHelper.COL_CITA_NOTAS, cita.notas)
         }
 
-        // El signo ? evita concatenar directamente el ID en SQL.
-        val resultado = db.update(
+        return db.update(
             HealthCareDbHelper.TABLE_CITA,
             values,
             "${HealthCareDbHelper.COL_CITA_ID} = ?",
             arrayOf(cita.id.toString())
         )
-
-        return resultado
     }
 
     // --------------------------------------------------
     // DELETE: Eliminar una cita
     // --------------------------------------------------
     fun eliminar(id: Int): Int {
-
         val db = dbHelper.writableDatabase
 
-        val resultado = db.delete(
+        return db.delete(
             HealthCareDbHelper.TABLE_CITA,
             "${HealthCareDbHelper.COL_CITA_ID} = ?",
             arrayOf(id.toString())
         )
-
-        return resultado
     }
 
     // --------------------------------------------------
     // Convierte la fila actual del cursor en una Cita.
-    // Se usa en todas las consultas para no repetir código.
     // --------------------------------------------------
     private fun cursorACita(it: Cursor): Cita {
+        val getColString = { colName: String ->
+            val idx = it.getColumnIndex(colName)
+            if (idx != -1 && !it.isNull(idx)) it.getString(idx) else ""
+        }
+        val getColInt = { colName: String ->
+            val idx = it.getColumnIndex(colName)
+            if (idx != -1 && !it.isNull(idx)) it.getInt(idx) else 0
+        }
 
         return Cita(
-            id = it.getInt(
-                it.getColumnIndexOrThrow(
-                    HealthCareDbHelper.COL_CITA_ID
-                )
-            ),
-            medicoId = it.getInt(
-                it.getColumnIndexOrThrow(
-                    HealthCareDbHelper.COL_CITA_MEDICO_ID
-                )
-            ),
-            fecha = it.getString(
-                it.getColumnIndexOrThrow(
-                    HealthCareDbHelper.COL_CITA_FECHA
-                )
-            ),
-            hora = it.getString(
-                it.getColumnIndexOrThrow(
-                    HealthCareDbHelper.COL_CITA_HORA
-                )
-            ),
-            motivo = it.getString(
-                it.getColumnIndexOrThrow(
-                    HealthCareDbHelper.COL_CITA_MOTIVO
-                )
-            ),
-            modalidad = it.getString(
-                it.getColumnIndexOrThrow(
-                    HealthCareDbHelper.COL_CITA_MODALIDAD
-                )
-            ) ?: ""
+            id = getColInt(HealthCareDbHelper.COL_CITA_ID),
+            medicoId = getColInt(HealthCareDbHelper.COL_CITA_MEDICO_ID),
+            fecha = getColString(HealthCareDbHelper.COL_CITA_FECHA),
+            hora = getColString(HealthCareDbHelper.COL_CITA_HORA),
+            motivo = getColString(HealthCareDbHelper.COL_CITA_MOTIVO),
+            modalidad = getColString(HealthCareDbHelper.COL_CITA_MODALIDAD),
+            notas = getColString(HealthCareDbHelper.COL_CITA_NOTAS),
+            medicoNombre = getColString("medico_nombre"),
+            medicoEspecialidad = getColString("medico_especialidad")
         )
     }
 
-    // Liberar los recursos de SQLite cuando corresponda.
     fun cerrar() {
         dbHelper.close()
     }

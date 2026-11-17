@@ -111,7 +111,7 @@ class DetalleCitaActivity : AppCompatActivity() {
     // Muestra los datos de la cita en pantalla.
     private fun mostrarCita(cita: Cita) {
 
-        tvMedico.text = cita.medicoNombre
+        tvMedico.text = cita.medicoNombre.ifBlank { "Médico #${cita.medicoId}" }
         tvEspecialidad.text = cita.medicoEspecialidad
         tvCodigo.text = getString(R.string.detalle_cita_codigo, cita.id)
         tvFecha.text = getString(R.string.detalle_cita_fecha, formatearFecha(cita.fecha))

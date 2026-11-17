@@ -21,11 +21,13 @@
 
         <activity
             android:name=".DetalleMedicoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".FormularioCitaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".MisCitasActivity"
@@ -45,15 +47,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity
-            android:name=".SplashActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".DetalleMedicoActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
 
     </application>
 

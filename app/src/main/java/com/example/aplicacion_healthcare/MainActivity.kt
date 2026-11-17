@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity() {
                     cita.hora
                 )
 
-                tvProxMedico.text = cita.medicoNombre
+                tvProxMedico.text = cita.medicoNombre.ifBlank { "Médico #${cita.medicoId}" }
 
                 btnVerDetalle.visibility = View.VISIBLE
             }
