@@ -9,6 +9,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.aplicacion_healthcare.data.CitasRepository
 import com.example.aplicacion_healthcare.models.Cita
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 // Pantalla formulario: crear o editar una cita.
 // Si llega "cita_id" por Intent es modo edición; si no, es modo creación.
@@ -80,8 +84,40 @@ class FormularioCitaActivity : AppCompatActivity() {
         val modalidad = etModalidad.text.toString().trim()
         val notas = etNotas.text.toString().trim()
 
+
         if (fecha.isBlank() || hora.isBlank() || motivo.isBlank()) {
             Toast.makeText(this, R.string.formulario_campos_requeridos, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (medicoId <= 0) {
+            Toast.makeText(this, "Selecciona un médico válido", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
+        val formatoFechaEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).apply {
+            isLenient = false
+        }
+        val posicionFecha = ParsePosition(0)
+        val fechaValida = formatoFechaEntrada.parse(fecha, posicionFecha)
+
+        if (fechaValida == null || posicionFecha.index != fecha.length || esFechaAnteriorAHoy(fechaValida)) {
+            Toast.makeText(this, "Ingresa una fecha válida de hoy en adelante", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val formatoFechaGuardada = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val fechaParaGuardar = formatoFechaGuardada.format(fechaValida)
+
+        val formatoHora = SimpleDateFormat("HH:mm", Locale.US).apply {
+            isLenient = false
+        }
+        val posicionHora = ParsePosition(0)
+        val horaValida = formatoHora.parse(hora, posicionHora)
+
+        if (horaValida == null || posicionHora.index != hora.length) {
+            Toast.makeText(this, "Ingresa la hora en formato HH:mm", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -90,7 +126,7 @@ class FormularioCitaActivity : AppCompatActivity() {
             val cita = Cita(
                 id = if (citaId != -1) citaId else 0,
                 medicoId = medicoId,
-                fecha = fecha,
+                fecha = fechaParaGuardar,
                 hora = hora,
                 motivo = motivo,
                 modalidad = modalidad,
@@ -109,5 +145,22 @@ class FormularioCitaActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this, R.string.formulario_cita_error, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun esFechaAnteriorAHoy(fecha: java.util.Date): Boolean {
+        val fechaIngresada = Calendar.getInstance().apply {
+            time = fecha
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val hoy = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return fechaIngresada.before(hoy)
     }
 }
