@@ -3,6 +3,7 @@ package com.example.aplicacion_healthcare
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.google.android.material.tabs.TabLayout
 // Pantalla 6: lista de citas (próximas y anteriores) con pestañas.
 class MisCitasActivity : AppCompatActivity() {
 
+    private lateinit var btnAtras: ImageButton
     private lateinit var tabLayout: TabLayout
     private lateinit var lvCitas: ListView
     private lateinit var tvSinCitas: TextView
@@ -34,9 +36,12 @@ class MisCitasActivity : AppCompatActivity() {
             insets
         }
 
+        btnAtras = findViewById(R.id.btnAtras)
         tabLayout = findViewById(R.id.tabLayout)
         lvCitas = findViewById(R.id.lvCitas)
         tvSinCitas = findViewById(R.id.tvSinCitas)
+
+        btnAtras.setOnClickListener { finish() }
 
         configurarTabs()
     }

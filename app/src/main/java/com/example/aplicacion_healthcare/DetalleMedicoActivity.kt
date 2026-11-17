@@ -3,15 +3,19 @@ package com.example.aplicacion_healthcare
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.aplicacion_healthcare.data.MedicosRepository
 import com.example.aplicacion_healthcare.models.Medico
 
 class DetalleMedicoActivity : AppCompatActivity() {
 
+    private lateinit var btnAtras: ImageButton
     private lateinit var ivFoto: ImageView
     private lateinit var tvNombre: TextView
     private lateinit var tvEspecialidad: TextView
@@ -29,6 +33,14 @@ class DetalleMedicoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detalle_medico)
 
         enlazarVistas()
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { vista, insets ->
+            val barras = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            vista.setPadding(barras.left, barras.top, barras.right, barras.bottom)
+            insets
+        }
+
+        btnAtras.setOnClickListener { finish() }
 
         medicoId = intent.getIntExtra("medico_id", -1)
 
@@ -54,6 +66,7 @@ class DetalleMedicoActivity : AppCompatActivity() {
     }
 
     private  fun enlazarVistas() {
+        btnAtras = findViewById(R.id.btnAtras)
         ivFoto = findViewById(R.id.ivFoto)
         tvNombre = findViewById(R.id.tvNombre)
         tvEspecialidad = findViewById(R.id.tvEspecialidad)

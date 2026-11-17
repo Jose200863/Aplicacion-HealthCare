@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blanco_fondo"
@@ -12,11 +13,29 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Fila de cabecera: botón volver + espacio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btnAtras"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_busqueda"
+                android:contentDescription="@string/medicos_volver"
+                android:src="@drawable/ic_flecha_atras" />
+
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/ivFoto"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@string/detalle_medico_foto_descripcion"
             android:scaleType="centerCrop" />
 
