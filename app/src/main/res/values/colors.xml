@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="verde_profundo">#02665E</color>
+    <color name="verde_salud">#0B7A6E</color>
+    <color name="menta_suave">#EAF8F5</color>
+
+    <color name="navy_texto">#0F172A</color>
+    <color name="gris_secundario">#6B7C8F</color>
+
+    <color name="blanco_fondo">#FBFDFD</color>
+    <color name="blanco_tarjeta">#FFFFFF</color>
+    <color name="gris_borde">#E3E8EE</color>
+
+    <color name="rosa_suave">#FFECEE</color>
+    <color name="rojo_corazon">#E5384F</color>
+
+    <color name="crema_suave">#FFF6E0</color>
+    <color name="naranja_estrella">#F5A623</color>
+
+    <color name="celeste_suave">#EAF3FF</color>
+    <color name="azul_ojo">#1E7FE0</color>
+
+    <color name="rojo_peligro">#D64545</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
 </resources>
