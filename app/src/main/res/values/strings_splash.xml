@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="splash_nombre">HealthCare</string>
+    <string name="splash_eslogan">SALUD CERCA DE TI</string>
+    <string name="splash_logo_descripcion">Logo de HealthCare</string>
+</resources>

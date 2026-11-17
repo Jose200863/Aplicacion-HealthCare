@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detalle_medico_foto_descripcion">Foto del médico</string>
+    <string name="detalle_medico_acerca_de">Acerca de</string>
+    <string name="detalle_medico_experiencia">%1$d años de experiencia</string>
+    <string name="detalle_medico_modalidad">Modalidad: %1$s</string>
+    <string name="detalle_medico_precio">Precio: ₡%1$s</string>
+    <string name="detalle_medico_agendar">Agendar cita</string>
+    <string name="detalle_medico_no_encontrado">No se encontró el médico</string>
+</resources>
