@@ -1,3 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aplicacion-HealthCare</string>
+
+    <string name="app_name">HealthCare</string>
+
+    <string name="saludo_inicio">¡Hola!</string>
+    <string name="nombre_usuario">Paciente</string>
+
+    <string name="buscar_medicos">Buscar médicos o especialidades</string>
+
+    <string name="titulo_proxima_cita">Tu próxima cita</string>
+    <string name="detalle_cita">Ver detalle</string>
+    <string name="sin_citas_proximas">No tienes citas próximas</string>
+    <string name="agenda_tu_primera_cita">Busca un especialista y agenda tu cita</string>
+    <string name="proxima_fecha_hora">%1$s · %2$s</string>
+
+    <string name="no_se_pudo_cargar_cita">No se pudo cargar la próxima cita</string>
+    <string name="intenta_de_nuevo">Vuelve a intentarlo</string>
+
+    <string name="titulo_especialidades">Especialidades</string>
+    <string name="titulo_recientes">Atendido recientemente</string>
+    <string name="ver_todas">Ver todas</string>
+
+    <string name="sin_medicos_recientes">Aún no hay médicos recientes</string>
+    <string name="no_se_pudieron_cargar_medicos">No se pudieron cargar los médicos</string>
+
+    <string name="especialidad_medicina">Medicina general</string>
+    <string name="especialidad_cardiologia">Cardiología</string>
+    <string name="especialidad_dermatologia">Dermatología</string>
+    <string name="especialidad_oftalmologia">Oftalmología</string>
+
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_medicos">Médicos</string>
+    <string name="nav_citas">Mis citas</string>
+
+    <string name="agendar_cita">Agendar cita</string>
+    <string name="logo_healthcare_descripcion">Logo de HealthCare</string>
+    <string name="icono_medicos_descripcion">Imagen de especialistas</string>
+
 </resources>
