@@ -30,6 +30,7 @@ class FormularioCitaActivity : AppCompatActivity() {
 
     private var citaId: Int = -1
     private var medicoId: Int = -1
+    private var fechaParaGuardar: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +72,7 @@ class FormularioCitaActivity : AppCompatActivity() {
             val cita = CitasRepository(this).obtenerPorId(citaId) ?: return
 
             medicoId = cita.medicoId
+            fechaParaGuardar = cita.fecha
             val fechaGuardada = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(cita.fecha)
             if (fechaGuardada != null) {
                 etFecha.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(fechaGuardada))
@@ -92,8 +94,7 @@ class FormularioCitaActivity : AppCompatActivity() {
         val modalidad = spModalidad.selectedItem?.toString().orEmpty()
         val notas = etNotas.text.toString().trim()
 
-
-        if (fecha.isBlank() || hora.isBlank() || motivo.isBlank()) {
+        if (fecha.isBlank() || fechaParaGuardar.isBlank() || hora.isBlank() || motivo.isBlank()) {
             Toast.makeText(this, R.string.formulario_campos_requeridos, Toast.LENGTH_SHORT).show()
             return
         }
@@ -103,20 +104,11 @@ class FormularioCitaActivity : AppCompatActivity() {
             return
         }
 
-
-        val formatoFechaEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).apply {
-            isLenient = false
-        }
-        val posicionFecha = ParsePosition(0)
-        val fechaValida = formatoFechaEntrada.parse(fecha, posicionFecha)
-
-        if (fechaValida == null || posicionFecha.index != fecha.length || esFechaAnteriorAHoy(fechaValida)) {
+        val hoyIso = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Calendar.getInstance().time)
+        if (fechaParaGuardar < hoyIso) {
             Toast.makeText(this, "Ingresa una fecha válida de hoy en adelante", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val formatoFechaGuardada = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val fechaParaGuardar = formatoFechaGuardada.format(fechaValida)
 
         val formatoHora = SimpleDateFormat("HH:mm", Locale.US).apply {
             isLenient = false
@@ -171,6 +163,7 @@ class FormularioCitaActivity : AppCompatActivity() {
             this,
             { _, anio, mes, dia ->
                 etFecha.setText(String.format(Locale.getDefault(), "%02d/%02d/%04d", dia, mes + 1, anio))
+                fechaParaGuardar = String.format(Locale.US, "%04d-%02d-%02d", anio, mes + 1, dia)
             },
             calendarioInicial.get(Calendar.YEAR),
             calendarioInicial.get(Calendar.MONTH),
@@ -202,20 +195,4 @@ class FormularioCitaActivity : AppCompatActivity() {
         }
     }
 
-    private fun esFechaAnteriorAHoy(fecha: java.util.Date): Boolean {
-        val fechaIngresada = Calendar.getInstance().apply {
-            time = fecha
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        val hoy = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        return fechaIngresada.before(hoy)
-    }
 }
