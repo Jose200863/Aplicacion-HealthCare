@@ -31,7 +31,9 @@
                 android:id="@+id/etFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date" />
+                android:clickable="true"
+                android:focusable="false"
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,18 +62,27 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/formulario_modalidad"
+            android:orientation="vertical"
             android:layout_marginBottom="12dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etModalidad"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/formulario_modalidad"
+                android:textColor="@color/navy_texto"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp" />
+
+            <Spinner
+                android:id="@+id/spModalidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:entries="@array/opciones_modalidad" />
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
