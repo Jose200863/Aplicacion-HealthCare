@@ -1,3 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aplicacion-HealthCare</string>
+
+    <string name="app_name">HealthCare</string>
+
+    <string name="saludo_inicio">¡Hola!</string>
+    <string name="nombre_usuario">Paciente</string>
+
+    <string name="buscar_medicos">Buscar médicos o especialidades</string>
+
+    <string name="titulo_proxima_cita">Tu próxima cita</string>
+    <string name="detalle_cita">Ver detalle</string>
+    <string name="sin_citas_proximas">No tienes citas próximas</string>
+    <string name="agenda_tu_primera_cita">Busca un especialista y agenda tu cita</string>
+    <string name="proxima_fecha_hora">%1$s · %2$s</string>
+
+    <string name="no_se_pudo_cargar_cita">No se pudo cargar la próxima cita</string>
+    <string name="intenta_de_nuevo">Vuelve a intentarlo</string>
+
+    <string name="titulo_especialidades">Especialidades</string>
+    <string name="titulo_recientes">Atendido recientemente</string>
+    <string name="ver_todas">Ver todas</string>
+
+    <string name="sin_medicos_recientes">Aún no hay médicos recientes</string>
+    <string name="no_se_pudieron_cargar_medicos">No se pudieron cargar los médicos</string>
+
+    <string name="especialidad_medicina">Medicina general</string>
+    <string name="especialidad_cardiologia">Cardiología</string>
+    <string name="especialidad_dermatologia">Dermatología</string>
+    <string name="especialidad_oftalmologia">Oftalmología</string>
+
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_medicos">Médicos</string>
+    <string name="nav_citas">Mis citas</string>
+
+    <string name="agendar_cita">Agendar cita</string>
+    <string name="logo_healthcare_descripcion">Logo de HealthCare</string>
+    <string name="icono_medicos_descripcion">Imagen de especialistas</string>
+
+    <!-- MisCitasActivity -->
+    <string name="titulo_mis_citas">Mis citas</string>
+    <string name="mis_citas_proximas">Próximas</string>
+    <string name="mis_citas_anteriores">Anteriores</string>
+    <string name="mis_citas_sin_proximas">No tienes citas próximas</string>
+    <string name="mis_citas_sin_anteriores">No tienes citas anteriores</string>
+
+    <!-- FormularioCitaActivity -->
+    <string name="titulo_formulario_cita">Agendar cita</string>
+    <string name="titulo_formulario_cita_editar">Editar cita</string>
+    <string name="formulario_fecha">Fecha</string>
+    <string name="formulario_fecha_seleccionar">Selecciona una fecha</string>
+    <string name="formulario_hora">Hora</string>
+    <string name="formulario_motivo">Motivo de consulta</string>
+    <string name="formulario_modalidad">Modalidad</string>
+    <string name="formulario_notas">Notas adicionales (opcional)</string>
+    <string name="formulario_guardar">Guardar cita</string>
+    <string name="formulario_cita_guardada">Cita guardada correctamente</string>
+    <string name="formulario_cita_error">No se pudo guardar la cita</string>
+    <string name="formulario_campos_requeridos">Por favor completa todos los campos requeridos</string>
+
+    <string-array name="opciones_modalidad">
+        <item>Presencial</item>
+        <item>Videollamada</item>
+    </string-array>
+
 </resources>

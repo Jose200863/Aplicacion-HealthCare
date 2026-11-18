@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_inicio"
+        android:icon="@drawable/ic_inicio"
+        android:title="@string/nav_inicio" />
+
+    <item
+        android:id="@+id/nav_medicos"
+        android:icon="@drawable/ic_medicos"
+        android:title="@string/nav_medicos" />
+
+    <item
+        android:id="@+id/nav_citas"
+        android:icon="@drawable/ic_calendario"
+        android:title="@string/nav_citas" />
+
+</menu>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detalle_cita_titulo">Resumen de cita</string>
+    <string name="detalle_cita_codigo">#NM-%1$d</string>
+    <string name="detalle_cita_fecha">Fecha: %1$s</string>
+    <string name="detalle_cita_hora">Hora: %1$s</string>
+    <string name="detalle_cita_modalidad">Modalidad: %1$s</string>
+    <string name="detalle_cita_motivo">Motivo: %1$s</string>
+    <string name="detalle_cita_notas">Notas: %1$s</string>
+    <string name="detalle_cita_sin_notas">Sin notas</string>
+
+    <string name="detalle_cita_editar">Editar</string>
+    <string name="detalle_cita_eliminar">Eliminar</string>
+    <string name="detalle_cita_volver">Volver</string>
+
+    <string name="detalle_cita_confirmar_titulo">Eliminar cita</string>
+    <string name="detalle_cita_confirmar_mensaje">¿Seguro que deseas eliminar esta cita? Esta acción no se puede deshacer.</string>
+    <string name="detalle_cita_confirmar_si">Eliminar</string>
+    <string name="detalle_cita_confirmar_no">Cancelar</string>
+
+    <string name="detalle_cita_eliminada">Cita eliminada</string>
+    <string name="detalle_cita_error_eliminar">No se pudo eliminar la cita</string>
+    <string name="detalle_cita_no_encontrada">No se encontró la cita</string>
+    <string name="detalle_cita_error_cargar">No se pudo cargar la cita</string>
+</resources>
