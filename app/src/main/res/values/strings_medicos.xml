@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="medicos_titulo">Encuentra a tu médico</string>
+    <string name="medicos_buscar_hint">Buscar por nombre o especialidad</string>
+    <string name="medicos_todas_especialidades">Todas las especialidades</string>
+    <string name="medicos_filtro_descripcion">Filtrar por especialidad</string>
+    <string name="medicos_volver">Volver</string>
+    <string name="medicos_vacio">No se encontraron médicos</string>
+    <string name="medicos_error_cargar">No se pudieron cargar los médicos</string>
+    <string name="medicos_foto_descripcion">Foto del médico</string>
+
+    <plurals name="medicos_cantidad">
+        <item quantity="one">%1$d especialista disponible</item>
+        <item quantity="other">%1$d especialistas disponibles</item>
+    </plurals>
+</resources>
