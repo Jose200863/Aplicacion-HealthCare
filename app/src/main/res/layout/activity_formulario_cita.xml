@@ -98,6 +98,43 @@
                 android:minLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/formulario_foto_titulo"
+            android:textColor="@color/navy_texto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/ivFotoCita"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:contentDescription="@string/formulario_foto_titulo"
+            android:scaleType="centerInside"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        <TextView
+            android:id="@+id/tvEstadoFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="@string/foto_sin_adjuntar"
+            android:textColor="@color/gris_secundario"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnTomarFoto"
+            style="@style/BotonPrimario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/formulario_tomar_foto"
+            android:textAllCaps="false" />
+
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"

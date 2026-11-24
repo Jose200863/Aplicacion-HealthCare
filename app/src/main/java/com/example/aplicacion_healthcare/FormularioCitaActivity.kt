@@ -16,6 +16,9 @@ import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import android.graphics.Bitmap
+import android.widget.ImageView
+import android.widget.TextView
 
 // Pantalla formulario: crear o editar una cita.
 // Si llega "cita_id" por Intent es modo edición; si no, es modo creación.
@@ -27,10 +30,26 @@ class FormularioCitaActivity : AppCompatActivity() {
     private lateinit var spModalidad: Spinner
     private lateinit var etNotas: EditText
     private lateinit var btnGuardar: Button
+    private lateinit var ivFotoCita: ImageView
+    private lateinit var tvEstadoFoto: TextView
+    private lateinit var btnTomarFoto: Button
 
     private var citaId: Int = -1
     private var medicoId: Int = -1
     private var fechaParaGuardar: String = ""
+
+    // La foto de apoyo se guarda solo en memoria mientras el formulario está abierto.
+    private var fotoAdjunta: Bitmap? = null
+
+    private val camara = CamaraHelper(this) { foto ->
+        if (foto != null) {
+            fotoAdjunta = foto
+            ivFotoCita.setImageBitmap(foto)
+            tvEstadoFoto.setText(R.string.foto_exito)
+        } else {
+            tvEstadoFoto.setText(R.string.foto_cancelada)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +72,8 @@ class FormularioCitaActivity : AppCompatActivity() {
 
         etFecha.setOnClickListener { mostrarSelectorFecha() }
 
+        btnTomarFoto.setOnClickListener { camara.solicitarFoto() }
+
         btnGuardar.setOnClickListener {
             guardarCita()
         }
@@ -65,6 +86,9 @@ class FormularioCitaActivity : AppCompatActivity() {
         spModalidad = findViewById(R.id.spModalidad)
         etNotas = findViewById(R.id.etNotas)
         btnGuardar = findViewById(R.id.btnGuardar)
+        ivFotoCita = findViewById(R.id.ivFotoCita)
+        tvEstadoFoto = findViewById(R.id.tvEstadoFoto)
+        btnTomarFoto = findViewById(R.id.btnTomarFoto)
     }
 
     private fun cargarCita() {
@@ -75,7 +99,11 @@ class FormularioCitaActivity : AppCompatActivity() {
             fechaParaGuardar = cita.fecha
             val fechaGuardada = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(cita.fecha)
             if (fechaGuardada != null) {
-                etFecha.setText(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(fechaGuardada))
+                etFecha.setText(
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
+                        fechaGuardada
+                    )
+                )
             }
             etHora.setText(cita.hora)
             etMotivo.setText(cita.motivo)
@@ -106,7 +134,8 @@ class FormularioCitaActivity : AppCompatActivity() {
 
         val hoyIso = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Calendar.getInstance().time)
         if (fechaParaGuardar < hoyIso) {
-            Toast.makeText(this, "Ingresa una fecha válida de hoy en adelante", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Ingresa una fecha válida de hoy en adelante", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -162,7 +191,15 @@ class FormularioCitaActivity : AppCompatActivity() {
         DatePickerDialog(
             this,
             { _, anio, mes, dia ->
-                etFecha.setText(String.format(Locale.getDefault(), "%02d/%02d/%04d", dia, mes + 1, anio))
+                etFecha.setText(
+                    String.format(
+                        Locale.getDefault(),
+                        "%02d/%02d/%04d",
+                        dia,
+                        mes + 1,
+                        anio
+                    )
+                )
                 fechaParaGuardar = String.format(Locale.US, "%04d-%02d-%02d", anio, mes + 1, dia)
             },
             calendarioInicial.get(Calendar.YEAR),

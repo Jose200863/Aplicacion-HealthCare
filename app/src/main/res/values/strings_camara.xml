@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="formulario_foto_titulo">Foto de apoyo (opcional): receta, examen o lesión visible</string>
+    <string name="formulario_tomar_foto">Tomar foto de apoyo</string>
+    <string name="foto_sin_adjuntar">Aún no hay foto adjunta</string>
+    <string name="foto_exito">Foto capturada correctamente</string>
+    <string name="foto_cancelada">Captura cancelada</string>
+    <string name="foto_permiso_denegado">Permiso de cámara denegado. No se puede tomar la foto</string>
+    <string name="foto_sin_camara">No hay una cámara disponible en este dispositivo</string>
+</resources>
